@@ -3,11 +3,10 @@
 
 name: Node.js CI
 
-on:
+on: 
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    tags:
+    - '*'
 
 jobs:
   build:
@@ -27,9 +26,11 @@ jobs:
       env:
         CI: true
         API_KEY: ${{ secrets.API_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOEKN }}
           
     - name: Create Release
       uses: ncipollo/release-action@v1.6.1
       with:
         allowUpdates: true
         artifacts: manifest.json, dist/ui.js, dist/ui.html, dist/code.js
+        token: ${{ secrets.GITHUB_TOKEN }}
