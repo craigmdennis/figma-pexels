@@ -32,7 +32,7 @@ jobs:
       uses: softprops/action-gh-release@v0.1.5
       with:
         draft: true
-        files:
+        files: |
           manifest.json
           dist/ui.js
           dist/ui.html
