@@ -15,7 +15,9 @@ jobs:
     runs-on: ubuntu-latest     
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
+
     - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
@@ -24,3 +26,14 @@ jobs:
     - run: npm run build --if-present
       env:
         CI: true
+        GITHUB_TOKEN: ${{ secrets.API_KEY }}
+        
+    - name: GH Release
+      uses: softprops/action-gh-release@v0.1.5
+      with:
+        draft: true
+        files:
+          manifest.json
+          dist/ui.js
+          dist/ui.html
+          dist/code.js
