@@ -1,25 +1,45 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
 on:
   push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
-
-name: Create Release
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
-    name: Create Release
-    runs-on: ubuntu-latest
+
+    runs-on: ubuntu-latest     
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.API_Key }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - run: npm ci
+    - run: npm run build --if-present
+      env:
+        CI: true
+        GITHUB_TOKEN: ${{ secrets.API_KEY }}
+        
+    - name: GH Release
+      uses: softprops/action-gh-release@v0.1.5
+      with:
+        draft: true
+        files:
+          manifest.json
+          dist/ui.js
+          dist/ui.html
+          dist/code.js
+          
+    - name: Create Release
+      uses: ncipollo/release-action@v1.6.1
+      with:
+        allowUpdates: true
+        artifacts: manifest.json, dist/ui.js, dist/ui.html, dist/code.js
