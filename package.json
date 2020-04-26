@@ -1,13 +1,14 @@
 {
-  "name": "figma-pexels",
+  "name": "pexels-figma-plugin",
   "version": "1.0.9",
-  "description": "A Figma plugin to insert photos from the popular free stock photography site Pexels.",
+  "description": "A Figma plugin to insert photos from Pexels.",
   "license": "ISC",
   "scripts": {
     "build": "/usr/local/bin/node node_modules/.bin/webpack --mode=production",
     "build:watch": "/usr/local/bin/node node_modules/.bin/webpack --mode=development --watch",
     "prettier:format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,json}'"
   },
+  "author": "Craig Dennis <craig@simplebitdesign.com> (https://craigmdennis.com)",
   "dependencies": {
     "@closeio/use-infinite-scroll": "^1.0.0",
     "babel-plugin-styled-components": "^1.10.7",
