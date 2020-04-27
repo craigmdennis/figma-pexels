@@ -1,3 +1,7 @@
+# This is now an official Pexels plugin
+
+This repo is now archived. Code is now maintained over at https://github.com/pexels/pexels-figma/.
+
 ![Plugin Cover Art](./assets/figma-cover.png)
 
 # Pexels Figma Plugin
